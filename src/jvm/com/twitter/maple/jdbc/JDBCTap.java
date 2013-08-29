@@ -274,7 +274,7 @@ public class JDBCTap extends Tap<JobConf, RecordReader, OutputCollector> {
 
     private JobConf getSourceConf( FlowProcess<JobConf> flowProcess, JobConf conf, String property )
         throws IOException {
-        Map<String, String> priorConf = HadoopUtil.deserializeMapBase64( property, true );
+        Map<String, String> priorConf = (Map<String,String>) HadoopUtil.deserializeBase64(property, conf, Map.class, true );
         return flowProcess.mergeMapIntoConfig( conf, priorConf );
     }
 

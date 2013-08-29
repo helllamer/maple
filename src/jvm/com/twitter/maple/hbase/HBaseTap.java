@@ -26,6 +26,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
+import org.apache.hadoop.hbase.exceptions.*;
 import org.apache.hadoop.hbase.mapreduce.TableOutputFormat;
 import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.JobConf;
@@ -132,7 +133,7 @@ public class HBaseTap extends Tap<JobConf, RecordReader, OutputCollector> {
     return new Path(SCHEME + ":/" + tableName.replaceAll(":", "_"));
   }
 
-  protected HBaseAdmin getHBaseAdmin(JobConf conf) throws MasterNotRunningException, ZooKeeperConnectionException {
+  protected HBaseAdmin getHBaseAdmin(JobConf conf) throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
     if (hBaseAdmin == null) {
       Configuration hbaseConf = HBaseConfiguration.create(conf);
       hBaseAdmin = new HBaseAdmin(hbaseConf);
